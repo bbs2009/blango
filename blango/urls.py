@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+# from django.conf import settings
+# print(f"Time zone: {settings.TIME_ZONE}")
 import blog.views
 
 urlpatterns = [
