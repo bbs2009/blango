@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load blog_extras %}
+
 {% block content %}
     <h2>Blog Posts</h2>
     {% for post in posts %}
@@ -15,4 +16,5 @@
         </div>
     {% endrow %}
     {% endfor %}
+    {% include "blog/login.html" %}
 {% endblock %}
