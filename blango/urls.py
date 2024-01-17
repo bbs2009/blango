@@ -21,6 +21,7 @@ from django.urls import path, include
 import blog.views
 
 urlpatterns = [
+    path("api/v1/", include("blog.api_urls")),
     path('admin/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("", blog.views.index),
