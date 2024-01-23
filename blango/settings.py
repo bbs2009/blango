@@ -67,6 +67,7 @@ class Dev(Configuration):
         "allauth.socialaccount",
         "allauth.socialaccount.providers.google",
         "rest_framework",
+        "rest_framework.authtoken",
     ]
 
     SITE_ID = 1
@@ -75,6 +76,14 @@ class Dev(Configuration):
     ACCOUNT_USERNAME_REQUIRED = False
     ACCOUNT_AUTHENTICATION_METHOD = "email"
     ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
+
+    REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        ]
+      }
 
 
     MIDDLEWARE = [
