@@ -5,7 +5,13 @@ import os
 
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
-from blog.api.views import PostList, PostDetail, UserDetail
+from rest_framework.routers import DefaultRouter
+
+from blog.api.views import  UserDetail, TagViewSet, PostViewSet
+
+router = DefaultRouter()
+router.register("tags", TagViewSet)
+router.register("posts", PostViewSet)
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -15,21 +21,21 @@ schema_view = get_schema_view(
     ),
     url=f"https://{os.environ.get('CODIO_HOSTNAME')}-8000.codio.io/api/v1/",
     public=True,
-)
+) 
 
 urlpatterns = [
-    path("posts/", PostList.as_view(), name="api_post_list"),
-    path("posts/<int:pk>", PostDetail.as_view(), name="api_post_detail"),
     path("users/<str:email>", UserDetail.as_view(), name="api_user_detail"),
+
 ]
 
 urlpatterns += [
     path("auth/", include("rest_framework.urls")),
     path("token-auth/", views.obtain_auth_token),
-    # path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path("", include(router.urls)),
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+# urlpatterns = format_suffix_patterns(urlpatterns)
 
