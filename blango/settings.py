@@ -87,6 +87,18 @@ class Dev(Configuration):
         "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ],
+            "DEFAULT_THROTTLE_CLASSES": [
+            "blog.api.throttling.AnonSustainedThrottle",
+            "blog.api.throttling.AnonBurstThrottle",
+            "blog.api.throttling.UserSustainedThrottle",
+            "blog.api.throttling.UserBurstThrottle",
+        ],
+        "DEFAULT_THROTTLE_RATES": {
+            "anon_sustained": "500/day",
+            "anon_burst": "10/minute",
+            "user_sustained": "5000/day",
+            "user_burst": "100/minute",
+        },
     }
     SWAGGER_SETTINGS = {
     "SECURITY_DEFINITIONS": {
@@ -233,6 +245,9 @@ class Dev(Configuration):
 }
 
     AUTH_USER_MODEL = "blango_auth.User"
+
+
+
 
 
 class Prod(Dev):
