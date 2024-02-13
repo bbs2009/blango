@@ -1,27 +1,25 @@
-for(let i = 0; i < 10; i += 1) {
-  console.log('for loop i: ' + i)
+function resolvedCallback(data) {
+  console.log('Resolved with data ' +  data)
 }
 
-let j = 0
-while(j < 10) {
-  console.log('while loop j: ' + j)
-  j += 1
+function rejectedCallback(message) {
+  console.log('Rejected with message ' + message)
 }
 
-let k = 10
+const lazyAdd = function (a, b) {
+  const doAdd = (resolve, reject) => {
+    if (typeof a !== "number" || typeof b !== "number") {
+      reject("a and b must both be numbers")
+    } else {
+      const sum = a + b
+      resolve(sum)
+    }
+  }
 
-do {
-  console.log('do while k: ' + k)
-} while(k < 10)
+  return new Promise(doAdd)
+}
 
-const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const p = lazyAdd(3, 4)
+p.then(resolvedCallback, rejectedCallback)
 
-numbers.forEach((value => {
-  console.log('For each value ' + value)
-}))
-
-const doubled = numbers.map(value => value * 2)
-
-console.log('Here are the doubled numbers')
-
-console.log(doubled)
+lazyAdd("nan", "alsonan").then(resolvedCallback, rejectedCallback)
